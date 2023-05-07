@@ -1,8 +1,7 @@
 package jcli
 
 import (
-	"fmt"
-	"os"
+	"github.com/shipengqi/log"
 	"path/filepath"
 	"strings"
 
@@ -45,8 +44,11 @@ func addConfigFlag(basename string, fs *pflag.FlagSet) {
 		}
 
 		if err := viper.ReadInConfig(); err != nil {
-			_, _ = fmt.Fprintf(os.Stderr, "Error: failed to read configuration file(%s): %v\n", _filename, err)
-			os.Exit(1)
+			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+				log.Warnf("Warn: %v\n", err)
+				return
+			}
+			log.Fatalf("Error: failed to read configuration file(%s): %v\n", _filename, err)
 		}
 	})
 }

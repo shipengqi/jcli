@@ -4,10 +4,23 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fatih/color"
+	cliflag "github.com/shipengqi/component-base/cli/flag"
+	"github.com/shipengqi/component-base/cli/globalflag"
+	"github.com/shipengqi/component-base/term"
+	"github.com/shipengqi/component-base/version"
+	"github.com/shipengqi/component-base/version/verflag"
 	"github.com/shipengqi/errors"
+	"github.com/shipengqi/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+)
+
+const (
+	FlagSetNameGlobal = "global"
+)
+
+var (
+	progressMessage = Green("==>")
 )
 
 // RunFunc defines the application's run callback function.
@@ -15,17 +28,17 @@ type RunFunc func() error
 
 // App is the main structure of a cli application.
 type App struct {
-	name        string
-	basename    string
-	description string
-	runfunc     RunFunc
-	opts        CliOptions
-	silence     bool
-	noVersion   bool
-	noConfig    bool
-	bindViper   bool
-	subs        []*cobra.Command
-	cmd         *cobra.Command
+	name           string
+	basename       string
+	description    string
+	runfunc        RunFunc
+	opts           CliOptions
+	silence        bool
+	disableVersion bool
+	disableConfig  bool
+	sortFlags      bool
+	subs           []*cobra.Command
+	cmd            *cobra.Command
 }
 
 // New create a new cli application.
@@ -33,7 +46,7 @@ func New(name string, opts ...Option) *App {
 	a := &App{
 		name: name,
 	}
-	a.applyOptions(opts...)
+	a.withOptions(opts...)
 
 	a.cmd = a.buildCommand()
 
@@ -43,22 +56,27 @@ func New(name string, opts ...Option) *App {
 // Run is used to launch the application.
 func (a *App) Run() {
 	if err := a.cmd.Execute(); err != nil {
-		fmt.Printf("%v %v\n", color.RedString("Error:"), err)
+		fmt.Printf("%v %v\n", Red("Error:"), err)
 		os.Exit(1)
 	}
 }
 
-// applyOptions apply options for the application.
-func (a *App) applyOptions(opts ...Option) *App {
-	for _, opt := range opts {
-		opt.apply(a)
-	}
-	return a
+// Command returns cobra command instance inside the application.
+func (a *App) Command() *cobra.Command {
+	return a.cmd
 }
 
 // AddCommands adds multiple sub commands to the application.
 func (a *App) AddCommands(commands ...*cobra.Command) {
 	a.subs = append(a.subs, commands...)
+}
+
+// withOptions apply options for the application.
+func (a *App) withOptions(opts ...Option) *App {
+	for _, opt := range opts {
+		opt.apply(a)
+	}
+	return a
 }
 
 func (a *App) buildCommand() *cobra.Command {
@@ -71,6 +89,9 @@ func (a *App) buildCommand() *cobra.Command {
 		SilenceErrors: true,
 	}
 
+	cmd.Flags().SortFlags = a.sortFlags
+	cliflag.InitFlags(cmd.Flags())
+
 	if len(a.subs) > 0 {
 		for i := range a.subs {
 			cmd.AddCommand(a.subs[i])
@@ -81,33 +102,84 @@ func (a *App) buildCommand() *cobra.Command {
 		cmd.RunE = a.run
 	}
 
+	var nfs cliflag.NamedFlagSets
+
 	if a.opts != nil {
-		a.opts.AddFlags(cmd.Flags())
+		nfs = a.opts.Flags()
+		fs := cmd.Flags()
+		for _, set := range nfs.FlagSets {
+			set.SortFlags = a.sortFlags
+			fs.AddFlagSet(set)
+		}
 	}
 
-	addConfigFlag(a.basename, cmd.Flags())
+	cmd.Flags().AddFlagSet(nfs.FlagSet(FlagSetNameGlobal))
+	if !a.disableVersion {
+		verflag.AddFlags(nfs.FlagSet(FlagSetNameGlobal))
+	}
+	if !a.disableConfig {
+		addConfigFlag(a.basename, nfs.FlagSet(FlagSetNameGlobal))
+	}
+	globalflag.AddGlobalFlags(nfs.FlagSet(FlagSetNameGlobal), cmd.Name())
+
+	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
+	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
 
 	return cmd
 }
 
-func (a *App) run(cmd *cobra.Command) error {
+func (a *App) run(cmd *cobra.Command, args []string) error {
 
-	if err := viper.BindPFlags(cmd.Flags()); err != nil {
-		return err
+	if !a.disableVersion {
+		verflag.PrintAndExitIfRequested()
 	}
 
-	if err := viper.Unmarshal(a.opts); err != nil {
-		return err
+	if !a.disableConfig {
+		if err := viper.BindPFlags(cmd.Flags()); err != nil {
+			return err
+		}
+
+		if err := viper.Unmarshal(a.opts); err != nil {
+			return err
+		}
+	}
+
+	if !a.silence {
+		log.Infof("%s Starting %s ...", progressMessage, a.name)
+		if !a.disableVersion {
+			log.Infof("%s Version: \n%s", progressMessage, version.Get().String())
+		}
+		if !a.disableConfig {
+			log.Infof("%s Config file used: `%s`", progressMessage, viper.ConfigFileUsed())
+		}
 	}
 
 	if a.opts != nil {
-		if errs := a.opts.Validate(); len(errs) > 0 {
-			return errors.NewAggregate(errs)
+		if err := a.applyOptions(); err != nil {
+			return err
 		}
 	}
 
 	if a.runfunc != nil {
 		return a.runfunc()
+	}
+
+	return nil
+}
+
+func (a *App) applyOptions() error {
+	if options, ok := a.opts.(CompletableOptions); ok {
+		if err := options.Complete(); err != nil {
+			return err
+		}
+	}
+
+	if errs := a.opts.Validate(); len(errs) != 0 {
+		return errors.NewAggregate(errs)
+	}
+
+	if options, ok := a.opts.(PrintableOptions); ok && !a.silence {
+		log.Infof("%s Options: `%s`", progressMessage, options.String())
 	}
 
 	return nil

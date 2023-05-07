@@ -1,14 +1,13 @@
 package jcli
 
 import (
-	"github.com/spf13/pflag"
+	cliflag "github.com/shipengqi/component-base/cli/flag"
 )
 
 // CliOptions abstracts configuration options for reading parameters from the
 // command line.
 type CliOptions interface {
-	// AddFlags adds flags to the given pflag.FlagSet object.
-	AddFlags(fs *pflag.FlagSet)
+	Flags() (fss cliflag.NamedFlagSets)
 	Validate() []error
 }
 
@@ -77,20 +76,20 @@ func WithSilence() Option {
 // DisableVersion disable the version flag.
 func DisableVersion() Option {
 	return optionFunc(func(a *App) {
-		a.noVersion = true
+		a.disableVersion = true
 	})
 }
 
 // DisableConfig disable the config flag.
 func DisableConfig() Option {
 	return optionFunc(func(a *App) {
-		a.noConfig = true
+		a.disableConfig = true
 	})
 }
 
-// BindViper disable the config flag.
-func BindViper() Option {
+// WithSortFlags disable the config flag.
+func WithSortFlags(v bool) Option {
 	return optionFunc(func(a *App) {
-		a.bindViper = true
+		a.sortFlags = v
 	})
 }
