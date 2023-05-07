@@ -2,8 +2,9 @@ package jcli
 
 import (
 	"fmt"
-	cliflag "github.com/shipengqi/component-base/cli/flag"
 	"testing"
+
+	cliflag "github.com/shipengqi/component-base/cli/flag"
 )
 
 type fakeCliOptions struct {

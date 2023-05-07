@@ -1,11 +1,11 @@
 package jcli
 
 import (
-	"github.com/shipengqi/log"
 	"path/filepath"
 	"strings"
 
 	"github.com/shipengqi/golib/sysutil"
+	"github.com/shipengqi/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
