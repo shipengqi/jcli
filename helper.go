@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/shipengqi/golib/sysutil"
+	"github.com/shipengqi/log"
 )
 
 func NormalizeCliName(basename string) string {
@@ -19,4 +20,9 @@ func NormalizeCliName(basename string) string {
 	}
 
 	return basename
+}
+
+func PrintWorkingDir() {
+	wd, _ := os.Getwd()
+	log.Infof("%v WorkingDir: %s", progressMessage, wd)
 }

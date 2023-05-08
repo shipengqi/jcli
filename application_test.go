@@ -2,6 +2,7 @@ package jcli
 
 import (
 	"fmt"
+	"github.com/spf13/cobra"
 	"testing"
 
 	cliflag "github.com/shipengqi/component-base/cli/flag"
@@ -79,15 +80,6 @@ func TestAppRun(t *testing.T) {
 		app.Run()
 	})
 
-	t.Run("with sort flags", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"),
-			WithDesc("test application description"),
-			WithSortFlags(false))
-		app.Run()
-	})
-
 	t.Run("with run with config", func(t *testing.T) {
 		app := New("simple",
 			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
@@ -97,6 +89,33 @@ func TestAppRun(t *testing.T) {
 				fmt.Println("application running")
 				return nil
 			}))
+		app.Run()
+	})
+
+	t.Run("add commands", func(t *testing.T) {
+		app := New("simple",
+			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			WithBaseName("testApp"),
+			WithDesc("test application description"),
+			DisableConfig(),
+			DisableVersion(),
+		)
+
+		app.AddCommands(
+			NewCommand("sub1", "sub1 command description"),
+			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(args []string) error {
+				fmt.Println("sub2 command running")
+				return nil
+			})),
+		)
+		app.AddCobraCommands(&cobra.Command{
+			Use:   "sub3",
+			Short: "sub3 command description",
+			RunE: func(cmd *cobra.Command, args []string) error {
+				fmt.Println("sub3 command running")
+				return nil
+			},
+		})
 		app.Run()
 	})
 }

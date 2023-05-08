@@ -31,12 +31,12 @@ type App struct {
 	name           string
 	basename       string
 	description    string
+	aliases        []string
 	runfunc        RunFunc
 	opts           CliOptions
 	silence        bool
 	disableVersion bool
 	disableConfig  bool
-	sortFlags      bool
 	subs           []*cobra.Command
 	cmd            *cobra.Command
 }
@@ -67,8 +67,17 @@ func (a *App) Command() *cobra.Command {
 }
 
 // AddCommands adds multiple sub commands to the application.
-func (a *App) AddCommands(commands ...*cobra.Command) {
+func (a *App) AddCommands(commands ...*Command) {
+	for _, v := range commands {
+		a.subs = append(a.subs, v.cobraCommand())
+		a.cmd.AddCommand(v.cobraCommand())
+	}
+}
+
+// AddCobraCommands adds multiple sub cobra.Command to the application.
+func (a *App) AddCobraCommands(commands ...*cobra.Command) {
 	a.subs = append(a.subs, commands...)
+	a.cmd.AddCommand(commands...)
 }
 
 // withOptions apply options for the application.
@@ -81,21 +90,20 @@ func (a *App) withOptions(opts ...Option) *App {
 
 func (a *App) buildCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   NormalizeCliName(a.basename),
-		Short: a.name,
-		Long:  a.description,
+		Use:     NormalizeCliName(a.basename),
+		Short:   a.name,
+		Aliases: a.aliases,
+		Long:    a.description,
 		// stop printing usage when the command errors
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}
 
-	cmd.Flags().SortFlags = a.sortFlags
+	cmd.Flags().SortFlags = true
 	cliflag.InitFlags(cmd.Flags())
 
 	if len(a.subs) > 0 {
-		for i := range a.subs {
-			cmd.AddCommand(a.subs[i])
-		}
+		cmd.AddCommand(a.subs...)
 	}
 
 	if a.runfunc != nil {
@@ -108,7 +116,6 @@ func (a *App) buildCommand() *cobra.Command {
 		nfs = a.opts.Flags()
 		fs := cmd.Flags()
 		for _, set := range nfs.FlagSets {
-			set.SortFlags = a.sortFlags
 			fs.AddFlagSet(set)
 		}
 	}
@@ -129,7 +136,8 @@ func (a *App) buildCommand() *cobra.Command {
 }
 
 func (a *App) run(cmd *cobra.Command, args []string) error {
-
+	PrintWorkingDir()
+	cliflag.PrintFlags(cmd.Flags())
 	if !a.disableVersion {
 		verflag.PrintAndExitIfRequested()
 	}

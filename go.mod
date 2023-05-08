@@ -4,9 +4,10 @@ go 1.18
 
 require (
 	github.com/fatih/color v1.15.0
-	github.com/shipengqi/component-base v0.1.2
+	github.com/shipengqi/component-base v0.1.5
 	github.com/shipengqi/errors v0.1.5
 	github.com/shipengqi/golib v0.1.29
+	github.com/shipengqi/log v0.1.6
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.15.0
@@ -26,7 +27,6 @@ require (
 	github.com/moby/term v0.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/shipengqi/log v0.1.6 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
