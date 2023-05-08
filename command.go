@@ -48,8 +48,9 @@ func (c *Command) AddCobraCommands(commands ...*cobra.Command) {
 
 func (c *Command) cobraCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   c.name,
-		Short: c.desc,
+		Use:     c.name,
+		Short:   c.desc,
+		Aliases: c.aliases,
 	}
 	cmd.Flags().SortFlags = false
 	if len(c.subs) > 0 {
