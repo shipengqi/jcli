@@ -21,18 +21,27 @@ type PrintableOptions interface {
 	String() string
 }
 
+// ====================================
+// Application Options
+
+// Option defines optional parameters for initializing the application
+// structure.
 type Option interface {
 	apply(a *App)
 }
-
-// ====================================
-// Application Options
 
 // optionFunc wraps a func, so it satisfies the Option interface.
 type optionFunc func(*App)
 
 func (f optionFunc) apply(a *App) {
 	f(a)
+}
+
+// cmdOptionFunc wraps a func, so it satisfies the Option interface.
+type cmdOptionFunc func(*Command)
+
+func (f cmdOptionFunc) apply(c *Command) {
+	f(c)
 }
 
 // WithRunFunc is used to set the application run callback function option.
@@ -73,6 +82,13 @@ func WithSilence() Option {
 	})
 }
 
+// WithAliases sets the application aliases.
+func WithAliases(aliases ...string) Option {
+	return optionFunc(func(a *App) {
+		a.aliases = aliases
+	})
+}
+
 // DisableVersion disable the version flag.
 func DisableVersion() Option {
 	return optionFunc(func(a *App) {
@@ -87,9 +103,34 @@ func DisableConfig() Option {
 	})
 }
 
-// WithSortFlags disable the config flag.
-func WithSortFlags(v bool) Option {
-	return optionFunc(func(a *App) {
-		a.sortFlags = v
+// ====================================
+// Command Options
+
+// CommandOption defines optional parameters for initializing the command
+// structure.
+type CommandOption interface {
+	apply(a *Command)
+}
+
+// WithCommandCliOptions to open the application's function to read from the
+// command line.
+func WithCommandCliOptions(opts CliOptions) CommandOption {
+	return cmdOptionFunc(func(c *Command) {
+		c.opts = opts
+	})
+}
+
+// WithCommandRunFunc is used to set the application's command startup callback
+// function option.
+func WithCommandRunFunc(run RunCommandFunc) CommandOption {
+	return cmdOptionFunc(func(c *Command) {
+		c.runfunc = run
+	})
+}
+
+// WithCommandAliases sets the command aliases.
+func WithCommandAliases(aliases ...string) CommandOption {
+	return cmdOptionFunc(func(c *Command) {
+		c.aliases = aliases
 	})
 }
