@@ -2,8 +2,9 @@ package jcli
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"testing"
+
+	"github.com/spf13/cobra"
 
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 )
@@ -98,7 +99,6 @@ func TestAppRun(t *testing.T) {
 			WithBaseName("testApp"),
 			WithDesc("test application description"),
 			DisableConfig(),
-			DisableVersion(),
 		)
 
 		app.AddCommands(

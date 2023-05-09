@@ -134,3 +134,10 @@ func WithCommandAliases(aliases ...string) CommandOption {
 		c.aliases = aliases
 	})
 }
+
+// WithCommandDesc sets the command aliases.
+func WithCommandDesc(desc string) CommandOption {
+	return cmdOptionFunc(func(c *Command) {
+		c.desc = desc
+	})
+}

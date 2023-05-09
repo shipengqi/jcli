@@ -122,6 +122,10 @@ func (a *App) buildCommand() *cobra.Command {
 
 	cmd.Flags().AddFlagSet(nfs.FlagSet(FlagSetNameGlobal))
 	if !a.disableVersion {
+		// add Version to enable version flag
+		cmd.Version = ""
+		cmd.SetVersionTemplate(version.Get().String())
+		// add version flag
 		verflag.AddFlags(nfs.FlagSet(FlagSetNameGlobal))
 	}
 	if !a.disableConfig {

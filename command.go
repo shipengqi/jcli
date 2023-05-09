@@ -15,6 +15,7 @@ type RunCommandFunc func(args []string) error
 // function.
 type Command struct {
 	name    string
+	short   string
 	desc    string
 	aliases []string
 	opts    CliOptions
@@ -24,10 +25,10 @@ type Command struct {
 
 // NewCommand creates a new sub command instance based on the given command name
 // and other options.
-func NewCommand(name string, desc string, opts ...CommandOption) *Command {
+func NewCommand(name string, short string, opts ...CommandOption) *Command {
 	c := &Command{
-		name: name,
-		desc: desc,
+		name:  name,
+		short: short,
 	}
 	c.withOptions(opts...)
 
@@ -49,7 +50,8 @@ func (c *Command) AddCobraCommands(commands ...*cobra.Command) {
 func (c *Command) cobraCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     c.name,
-		Short:   c.desc,
+		Short:   c.short,
+		Long:    c.desc,
 		Aliases: c.aliases,
 	}
 	cmd.Flags().SortFlags = false
