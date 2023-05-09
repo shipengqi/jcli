@@ -18,6 +18,10 @@ func Blue(msg string) string {
 	return color.BlueString(msg)
 }
 
+func IconBlue(msg string) string {
+	return Colorize(msg, color.BgHiBlue, color.Bold)
+}
+
 func Colorize(msg string, attrs ...color.Attribute) string {
 	co := color.New(attrs...)
 	return co.Sprint(msg)
