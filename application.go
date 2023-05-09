@@ -139,11 +139,12 @@ func (a *App) buildCommand() *cobra.Command {
 }
 
 func (a *App) run(cmd *cobra.Command, args []string) error {
-	PrintWorkingDir()
-	cliflag.PrintFlags(cmd.Flags())
 	if !a.disableVersion {
 		verflag.PrintAndExitIfRequested()
 	}
+
+	PrintWorkingDir()
+	cliflag.PrintFlags(cmd.Flags())
 
 	if !a.disableConfig {
 		if err := viper.BindPFlags(cmd.Flags()); err != nil {
