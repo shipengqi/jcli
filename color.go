@@ -19,7 +19,7 @@ func Blue(msg string) string {
 }
 
 func IconBlue(msg string) string {
-	return Colorize(msg, color.BgHiBlue, color.Bold)
+	return Colorize(msg, color.FgHiBlue, color.Bold)
 }
 
 func Colorize(msg string, attrs ...color.Attribute) string {
