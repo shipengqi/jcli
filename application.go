@@ -106,9 +106,11 @@ func (a *App) buildCommand() *cobra.Command {
 		cmd.AddCommand(a.subs...)
 	}
 
-	if a.runfunc != nil {
-		cmd.RunE = a.run
-	}
+	// if a.runfunc != nil {
+	// 	cmd.RunE = a.run
+	// }
+	// always add App.run func
+	cmd.RunE = a.run
 
 	var nfs cliflag.NamedFlagSets
 
@@ -122,9 +124,6 @@ func (a *App) buildCommand() *cobra.Command {
 
 	cmd.Flags().AddFlagSet(nfs.FlagSet(FlagSetNameGlobal))
 	if !a.disableVersion {
-		// add Version to enable version flag
-		cmd.Version = ""
-		cmd.SetVersionTemplate(version.Get().String())
 		// add version flag
 		verflag.AddFlags(nfs.FlagSet(FlagSetNameGlobal))
 	}
