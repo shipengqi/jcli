@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	cliflag "github.com/shipengqi/component-base/cli/flag"
+	"github.com/shipengqi/component-base/term"
 	"github.com/spf13/cobra"
 )
 
@@ -74,12 +76,16 @@ func (c *Command) cobraCommand() *cobra.Command {
 	if c.runfunc != nil {
 		cmd.Run = c.run
 	}
+	var nfs cliflag.NamedFlagSets
 	if c.opts != nil {
-		for _, f := range c.opts.Flags().FlagSets {
+		nfs = c.opts.Flags()
+		for _, f := range nfs.FlagSets {
 			cmd.Flags().AddFlagSet(f)
 		}
 	}
 	addHelpCommandFlag(c.name, cmd.Flags())
+	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
+	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
 
 	c.cmd = cmd
 	return cmd
