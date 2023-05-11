@@ -20,6 +20,7 @@ type Command struct {
 	aliases []string
 	opts    CliOptions
 	subs    []*cobra.Command
+	cmd     *cobra.Command
 	runfunc RunCommandFunc
 }
 
@@ -47,7 +48,16 @@ func (c *Command) AddCobraCommands(commands ...*cobra.Command) {
 	c.subs = append(c.subs, commands...)
 }
 
+// CobraCommand returns cobra command instance inside the Command.
+func (c *Command) CobraCommand() *cobra.Command {
+	return c.cobraCommand()
+}
+
 func (c *Command) cobraCommand() *cobra.Command {
+	if c.cmd != nil {
+		return c.cmd
+	}
+
 	cmd := &cobra.Command{
 		Use:     c.name,
 		Short:   c.short,
@@ -71,6 +81,7 @@ func (c *Command) cobraCommand() *cobra.Command {
 	}
 	addHelpCommandFlag(c.name, cmd.Flags())
 
+	c.cmd = cmd
 	return cmd
 }
 
