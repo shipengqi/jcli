@@ -61,12 +61,12 @@ func (a *App) Run() {
 	}
 }
 
-// Command returns cobra command instance inside the application.
+// Command returns cobra command instance inside the App.
 func (a *App) Command() *cobra.Command {
 	return a.cmd
 }
 
-// AddCommands adds multiple sub commands to the application.
+// AddCommands adds multiple sub commands to the App.
 func (a *App) AddCommands(commands ...*Command) {
 	for _, v := range commands {
 		a.subs = append(a.subs, v.cobraCommand())
@@ -74,7 +74,7 @@ func (a *App) AddCommands(commands ...*Command) {
 	}
 }
 
-// AddCobraCommands adds multiple sub cobra.Command to the application.
+// AddCobraCommands adds multiple sub cobra.Command to the App.
 func (a *App) AddCobraCommands(commands ...*cobra.Command) {
 	a.subs = append(a.subs, commands...)
 	a.cmd.AddCommand(commands...)
@@ -104,8 +104,8 @@ func (a *App) buildCommand() *cobra.Command {
 
 	if len(a.subs) > 0 {
 		cmd.AddCommand(a.subs...)
-		cmd.SetHelpCommand(helpCommand(NormalizeCliName(a.basename)))
 	}
+	cmd.SetHelpCommand(helpCommand(NormalizeCliName(a.basename)))
 
 	// if a.runfunc != nil {
 	// 	cmd.RunE = a.run
