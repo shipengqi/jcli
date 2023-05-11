@@ -104,6 +104,7 @@ func (a *App) buildCommand() *cobra.Command {
 
 	if len(a.subs) > 0 {
 		cmd.AddCommand(a.subs...)
+		cmd.SetHelpCommand(helpCommand(NormalizeCliName(a.basename)))
 	}
 
 	// if a.runfunc != nil {

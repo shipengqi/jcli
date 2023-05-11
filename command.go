@@ -69,6 +69,7 @@ func (c *Command) cobraCommand() *cobra.Command {
 			cmd.Flags().AddFlagSet(f)
 		}
 	}
+	addHelpCommandFlag(c.name, cmd.Flags())
 
 	return cmd
 }
