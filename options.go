@@ -103,6 +103,13 @@ func DisableConfig() Option {
 	})
 }
 
+// DisableCommandSorting controls sorting of the slice of commands, which is turned on by default.
+func DisableCommandSorting() Option {
+	return optionFunc(func(a *App) {
+		a.disableCmdSort = true
+	})
+}
+
 // ====================================
 // Command Options
 
