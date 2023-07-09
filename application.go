@@ -37,6 +37,7 @@ type App struct {
 	silence        bool
 	disableVersion bool
 	disableConfig  bool
+	disableCmdSort bool
 	subs           []*cobra.Command
 	cmd            *cobra.Command
 }
@@ -106,10 +107,6 @@ func (a *App) buildCommand() *cobra.Command {
 		cmd.AddCommand(a.subs...)
 	}
 	cmd.SetHelpCommand(helpCommand(NormalizeCliName(a.basename)))
-
-	// if a.runfunc != nil {
-	// 	cmd.RunE = a.run
-	// }
 	// always add App.run func
 	cmd.RunE = a.run
 
@@ -136,6 +133,9 @@ func (a *App) buildCommand() *cobra.Command {
 	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
 	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
 
+	if a.disableCmdSort {
+		cobra.EnableCommandSorting = false
+	}
 	return cmd
 }
 
@@ -147,7 +147,7 @@ func (a *App) run(cmd *cobra.Command, args []string) error {
 	PrintWorkingDir()
 	cliflag.PrintFlags(cmd.Flags())
 
-	if !a.disableConfig {
+	if !a.disableConfig && a.opts != nil {
 		if err := viper.BindPFlags(cmd.Flags()); err != nil {
 			return err
 		}
@@ -162,7 +162,7 @@ func (a *App) run(cmd *cobra.Command, args []string) error {
 		if !a.disableVersion {
 			log.Infof("%s Version: \n%s", progressMessage, version.Get().String())
 		}
-		if !a.disableConfig {
+		if !a.disableConfig && viper.ConfigFileUsed() != "" {
 			log.Infof("%s Config file used: `%s`", progressMessage, viper.ConfigFileUsed())
 		}
 	}

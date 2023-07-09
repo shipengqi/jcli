@@ -98,11 +98,15 @@ func TestAppRun(t *testing.T) {
 			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
 			WithBaseName("testApp"),
 			WithDesc("test application description"),
+			DisableCommandSorting(),
 			DisableConfig(),
 		)
 
 		app.AddCommands(
-			NewCommand("sub1", "sub1 command description"),
+			NewCommand("sub1", "sub1 command description", WithCommandRunFunc(func(args []string) error {
+				fmt.Println("sub1 command running")
+				return nil
+			})),
 			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(args []string) error {
 				fmt.Println("sub2 command running")
 				return nil
