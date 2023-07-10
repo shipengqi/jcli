@@ -17,7 +17,7 @@ var defaultShutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
 // A stop channel is returned which is closed on one of these signals.
 // If a second signal is captured, the program will exit with code 1.
 func SetupSignalHandler(signals ...os.Signal) <-chan struct{} {
-	close(setonce) // channel cannot be closed repeatedly, so there will throw a panic when called twice
+	close(setonce) // channel cannot be closed repeatedly, so panic occurs when called twice.
 
 	if len(signals) == 0 {
 		signals = defaultShutdownSignals
