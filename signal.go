@@ -4,36 +4,39 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/shipengqi/log"
 )
+
+type SignalReceiver func(os.Signal)
 
 var setonce = make(chan struct{})
 
-var shutdownc chan os.Signal
+var sigc chan os.Signal
 
 var defaultShutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
 
-// SetupSignalHandler SIGTERM and SIGINT are registered by default.
+// setupSignalHandler SIGTERM and SIGINT are registered by default.
 // Register other signals via the signal parameter.
-// A stop channel is returned which is closed on one of these signals.
-// If a second signal is captured, the program will exit with code 1.
-func SetupSignalHandler(signals ...os.Signal) <-chan struct{} {
+func setupSignalHandler(receiver SignalReceiver, signals ...os.Signal) {
 	close(setonce) // channel cannot be closed repeatedly, so panic occurs when called twice.
 
 	if len(signals) == 0 {
 		signals = defaultShutdownSignals
 	}
-	shutdownc = make(chan os.Signal, 2)
+	sigc = make(chan os.Signal)
 
-	stop := make(chan struct{})
-
-	signal.Notify(shutdownc, signals...)
+	signal.Notify(sigc, signals...)
 
 	go func() {
-		<-shutdownc
-		close(stop)
-		<-shutdownc
-		os.Exit(1) // second signal. Exit directly.
+		for {
+			if sig, ok := <-sigc; ok {
+				log.Debugf("%s received signal: %s", progressMessage, sig.String())
+				receiver(sig)
+			} else {
+				log.Debugf("%s signal channel closed", progressMessage)
+				break
+			}
+		}
 	}()
-
-	return stop
 }

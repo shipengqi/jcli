@@ -1,6 +1,8 @@
 package jcli
 
 import (
+	"os"
+
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 )
 
@@ -86,6 +88,16 @@ func WithSilence() Option {
 func WithAliases(aliases ...string) Option {
 	return optionFunc(func(a *App) {
 		a.aliases = aliases
+	})
+}
+
+// WithOnSignalReceived sets a signals' receiver.
+// SIGTERM and SIGINT are registered by default.
+// Register other signals via the signal parameter.
+func WithOnSignalReceived(receiver func(os.Signal), signals ...os.Signal) Option {
+	return optionFunc(func(a *App) {
+		a.signalReceiver = receiver
+		a.signals = signals
 	})
 }
 
