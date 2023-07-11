@@ -33,6 +33,8 @@ type App struct {
 	description    string
 	aliases        []string
 	runfunc        RunFunc
+	signalReceiver SignalReceiver
+	signals        []os.Signal
 	opts           CliOptions
 	silence        bool
 	disableVersion bool
@@ -56,6 +58,10 @@ func New(name string, opts ...Option) *App {
 
 // Run is used to launch the application.
 func (a *App) Run() {
+	if a.signalReceiver != nil {
+		setupSignalHandler(a.signalReceiver, a.signals...)
+	}
+
 	if err := a.cmd.Execute(); err != nil {
 		fmt.Printf("%v %v\n", Red("Error:"), err)
 		os.Exit(1)
