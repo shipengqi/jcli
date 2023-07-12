@@ -65,7 +65,9 @@ func (c *Command) cobraCommand() *cobra.Command {
 		Short:   c.short,
 		Aliases: c.aliases,
 	}
-	if c.desc != "" {
+	if c.desc == "" {
+		cmd.Long = c.short
+	} else {
 		cmd.Long = c.desc
 	}
 
