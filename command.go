@@ -36,6 +36,7 @@ func NewCommand(name string, short string, opts ...CommandOption) *Command {
 	}
 	c.withOptions(opts...)
 
+	c.cmd = c.cobraCommand()
 	return c
 }
 
@@ -43,12 +44,14 @@ func NewCommand(name string, short string, opts ...CommandOption) *Command {
 func (c *Command) AddCommands(commands ...*Command) {
 	for _, v := range commands {
 		c.subs = append(c.subs, v.cobraCommand())
+		c.cmd.AddCommand(v.cobraCommand())
 	}
 }
 
 // AddCobraCommands adds multiple sub cobra.Command to the current command.
 func (c *Command) AddCobraCommands(commands ...*cobra.Command) {
 	c.subs = append(c.subs, commands...)
+	c.cmd.AddCommand(commands...)
 }
 
 // CobraCommand returns cobra command instance inside the Command.
@@ -109,8 +112,6 @@ func (c *Command) cobraCommand() *cobra.Command {
 	addHelpCommandFlag(c.name, cmd.Flags())
 	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
 	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
-
-	c.cmd = cmd
 	return cmd
 }
 
