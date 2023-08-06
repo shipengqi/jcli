@@ -49,7 +49,7 @@ func TestAppRun(t *testing.T) {
 			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
 			WithBaseName("testApp"),
 			WithDesc("test application description"),
-			WithRunFunc(func(cmd *cobra.Command, args []string) error {
+			WithRunFunc(func() error {
 				fmt.Println("application running")
 				return nil
 			}),
@@ -62,7 +62,7 @@ func TestAppRun(t *testing.T) {
 			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
 			WithBaseName("testApp"),
 			WithDesc("test application description"),
-			WithRunFunc(func(cmd *cobra.Command, args []string) error {
+			WithRunFunc(func() error {
 				fmt.Println("application running")
 				return nil
 			}),
@@ -86,7 +86,7 @@ func TestAppRun(t *testing.T) {
 			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
 			WithBaseName("testApp"),
 			WithDesc("test application description"),
-			WithRunFunc(func(cmd *cobra.Command, args []string) error {
+			WithRunFunc(func() error {
 				fmt.Println("application running")
 				return nil
 			}))
@@ -104,13 +104,13 @@ func TestAppRun(t *testing.T) {
 
 		app.AddCommands(
 			NewCommand("sub1", "sub1 command description",
-				WithCommandRunFunc(func(cmd *cobra.Command, args []string) error {
+				WithCommandRunFunc(func(args []string) error {
 					fmt.Println("sub1 command running")
 					return nil
 				}),
 				WithCommandDesc("sub1 long desc"),
 			),
-			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(cmd *cobra.Command, args []string) error {
+			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(args []string) error {
 				fmt.Println("sub2 command running")
 				return nil
 			})),
