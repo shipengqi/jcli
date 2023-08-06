@@ -2,11 +2,12 @@ package jcli
 
 import (
 	"fmt"
+	"os"
+
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 	"github.com/shipengqi/component-base/term"
 	"github.com/shipengqi/errors"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 // RunCommandFunc defines the application's command startup callback function.
