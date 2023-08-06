@@ -118,6 +118,7 @@ func (a *App) buildCommand() *cobra.Command {
 
 	var nfs cliflag.NamedFlagSets
 
+	// Add command line flag sets
 	if a.opts != nil {
 		nfs = a.opts.Flags()
 		fs := cmd.Flags()
