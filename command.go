@@ -2,11 +2,11 @@ package jcli
 
 import (
 	"fmt"
-	"os"
-
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 	"github.com/shipengqi/component-base/term"
+	"github.com/shipengqi/errors"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 // RunCommandFunc defines the application's command startup callback function.
@@ -55,6 +55,25 @@ func (c *Command) CobraCommand() *cobra.Command {
 	return c.cobraCommand()
 }
 
+// Help runs the Help of cobra command.
+func (c *Command) Help() error {
+	if c.cmd == nil {
+		return nil
+	}
+	return c.cmd.Help()
+}
+
+// Run runs the command.
+func (c *Command) Run() {
+	if c.cmd == nil {
+		return
+	}
+	if err := c.cmd.Execute(); err != nil {
+		fmt.Printf("%v %v\n", Red("Error:"), err)
+		os.Exit(1)
+	}
+}
+
 func (c *Command) cobraCommand() *cobra.Command {
 	if c.cmd != nil {
 		return c.cmd
@@ -77,7 +96,7 @@ func (c *Command) cobraCommand() *cobra.Command {
 		cmd.AddCommand(c.subs...)
 	}
 	if c.runfunc != nil {
-		cmd.Run = c.run
+		cmd.RunE = c.run
 	}
 	var nfs cliflag.NamedFlagSets
 	if c.opts != nil {
@@ -94,13 +113,18 @@ func (c *Command) cobraCommand() *cobra.Command {
 	return cmd
 }
 
-func (c *Command) run(cmd *cobra.Command, args []string) {
-	if c.runfunc != nil {
-		if err := c.runfunc(args); err != nil {
-			fmt.Printf("%v %v\n", Red("Error:"), err)
-			os.Exit(1)
+func (c *Command) run(cmd *cobra.Command, args []string) error {
+	if c.opts != nil {
+		if err := c.applyOptions(); err != nil {
+			return err
 		}
 	}
+	if c.runfunc != nil {
+		if err := c.runfunc(args); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // withOptions apply options for the application.
@@ -109,4 +133,18 @@ func (c *Command) withOptions(opts ...CommandOption) *Command {
 		opt.apply(c)
 	}
 	return c
+}
+
+func (c *Command) applyOptions() error {
+	if options, ok := c.opts.(CompletableOptions); ok {
+		if err := options.Complete(); err != nil {
+			return err
+		}
+	}
+
+	if errs := c.opts.Validate(); len(errs) != 0 {
+		return errors.NewAggregate(errs)
+	}
+
+	return nil
 }
