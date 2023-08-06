@@ -24,7 +24,7 @@ var (
 )
 
 // RunFunc defines the application's run callback function.
-type RunFunc func() error
+type RunFunc func(cmd *cobra.Command, args []string) error
 
 // App is the main structure of a cli application.
 type App struct {
@@ -180,7 +180,7 @@ func (a *App) run(cmd *cobra.Command, args []string) error {
 	}
 
 	if a.runfunc != nil {
-		return a.runfunc()
+		return a.runfunc(cmd, args)
 	}
 
 	return nil
