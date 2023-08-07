@@ -11,7 +11,7 @@ import (
 )
 
 // RunCommandFunc defines the application's command startup callback function.
-type RunCommandFunc func(args []string) error
+type RunCommandFunc func(cmd *Command, args []string) error
 
 // Command is a sub command structure of a cli application.
 // It is recommended that a command be created with the app.NewCommand()
@@ -67,6 +67,14 @@ func (c *Command) Help() error {
 	return c.cmd.Help()
 }
 
+// Name returns the command's name: the first word in the use line.
+func (c *Command) Name() string {
+	if c.cmd == nil {
+		return ""
+	}
+	return c.cmd.Name()
+}
+
 // Run runs the command.
 func (c *Command) Run() {
 	if c.cmd == nil {
@@ -115,14 +123,14 @@ func (c *Command) cobraCommand() *cobra.Command {
 	return cmd
 }
 
-func (c *Command) run(cmd *cobra.Command, args []string) error {
+func (c *Command) run(_ *cobra.Command, args []string) error {
 	if c.opts != nil {
 		if err := c.applyOptions(); err != nil {
 			return err
 		}
 	}
 	if c.runfunc != nil {
-		if err := c.runfunc(args); err != nil {
+		if err := c.runfunc(c, args); err != nil {
 			return err
 		}
 	}
