@@ -104,13 +104,13 @@ func TestAppRun(t *testing.T) {
 
 		app.AddCommands(
 			NewCommand("sub1", "sub1 command description",
-				WithCommandRunFunc(func(args []string) error {
+				WithCommandRunFunc(func(cmd *Command, args []string) error {
 					fmt.Println("sub1 command running")
 					return nil
 				}),
 				WithCommandDesc("sub1 long desc"),
 			),
-			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(args []string) error {
+			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(cmd *Command, args []string) error {
 				fmt.Println("sub2 command running")
 				return nil
 			})),
