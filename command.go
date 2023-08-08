@@ -22,7 +22,6 @@ type Command struct {
 	short   string
 	desc    string
 	aliases []string
-	hidden  []string
 	opts    CliOptions
 	subs    []*cobra.Command
 	cmd     *cobra.Command
