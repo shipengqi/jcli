@@ -2,6 +2,7 @@ package jcli
 
 import (
 	"fmt"
+	"github.com/spf13/pflag"
 	"os"
 
 	cliflag "github.com/shipengqi/component-base/cli/flag"
@@ -21,6 +22,7 @@ type Command struct {
 	short   string
 	desc    string
 	aliases []string
+	hidden  []string
 	opts    CliOptions
 	subs    []*cobra.Command
 	cmd     *cobra.Command
@@ -75,6 +77,26 @@ func (c *Command) Name() string {
 	return c.cmd.Name()
 }
 
+// Flags returns the complete FlagSet that applies
+// to this command.
+func (c *Command) Flags() *pflag.FlagSet {
+	if c.cmd == nil {
+		return nil
+	}
+	return c.cmd.Flags()
+}
+
+// MarkHidden sets flags to 'hidden' in your program.
+func (c *Command) MarkHidden(flags ...string) {
+	if c.cmd == nil {
+		return
+	}
+	for _, v := range flags {
+		_ = c.cmd.Flags().MarkHidden(v)
+	}
+	return
+}
+
 // Run runs the command.
 func (c *Command) Run() {
 	if c.cmd == nil {
@@ -118,6 +140,7 @@ func (c *Command) cobraCommand() *cobra.Command {
 		}
 	}
 	addHelpCommandFlag(c.name, cmd.Flags())
+
 	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
 	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
 	return cmd

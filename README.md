@@ -2,6 +2,7 @@
 
 A package for building Go applications.
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/shipengqi/jcli)](https://goreportcard.com/report/github.com/shipengqi/jcli)
 [![Release](https://img.shields.io/github/release/shipengqi/jcli.svg)](https://github.com/shipengqi/jcli/releases)
 [![License](https://img.shields.io/github/license/shipengqi/jcli)](https://github.com/shipengqi/jcli/blob/main/LICENSE)
 
