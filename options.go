@@ -67,6 +67,13 @@ func WithDesc(desc string) Option {
 	})
 }
 
+// WithExamples is used to set the examples of the application.
+func WithExamples(examples string) Option {
+	return optionFunc(func(a *App) {
+		a.examples = examples
+	})
+}
+
 // WithCliOptions to open the application's function to read from the command line
 // or read parameters from the configuration file.
 func WithCliOptions(opts CliOptions) Option {
@@ -115,13 +122,6 @@ func DisableConfig() Option {
 	})
 }
 
-// DisableCommandSorting controls sorting of the slice of commands, which is turned on by default.
-func DisableCommandSorting() Option {
-	return optionFunc(func(a *App) {
-		a.disableCmdSort = true
-	})
-}
-
 // ====================================
 // Command Options
 
@@ -158,5 +158,12 @@ func WithCommandAliases(aliases ...string) CommandOption {
 func WithCommandDesc(desc string) CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.desc = desc
+	})
+}
+
+// WithCommandExamples is used to set the examples of the command.
+func WithCommandExamples(examples string) CommandOption {
+	return cmdOptionFunc(func(c *Command) {
+		c.examples = examples
 	})
 }
