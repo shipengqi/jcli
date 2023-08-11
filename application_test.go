@@ -98,7 +98,6 @@ func TestAppRun(t *testing.T) {
 			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
 			WithBaseName("testApp"),
 			WithDesc("test application description"),
-			DisableCommandSorting(),
 			DisableConfig(),
 		)
 

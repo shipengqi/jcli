@@ -18,14 +18,15 @@ type RunCommandFunc func(cmd *Command, args []string) error
 // It is recommended that a command be created with the app.NewCommand()
 // function.
 type Command struct {
-	name    string
-	short   string
-	desc    string
-	aliases []string
-	opts    CliOptions
-	subs    []*cobra.Command
-	cmd     *cobra.Command
-	runfunc RunCommandFunc
+	name     string
+	short    string
+	desc     string
+	examples string
+	aliases  []string
+	opts     CliOptions
+	subs     []*cobra.Command
+	cmd      *cobra.Command
+	runfunc  RunCommandFunc
 }
 
 // NewCommand creates a new sub command instance based on the given command name
@@ -116,6 +117,11 @@ func (c *Command) cobraCommand() *cobra.Command {
 		Use:     c.name,
 		Short:   c.short,
 		Aliases: c.aliases,
+		Example: c.examples,
+		// stop printing usage when the command errors
+		// ensure that silence can take effect when the command is separated from the application.
+		SilenceUsage:  true,
+		SilenceErrors: true,
 	}
 
 	if c.desc == "" {

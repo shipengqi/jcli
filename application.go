@@ -31,6 +31,7 @@ type App struct {
 	name           string
 	basename       string
 	description    string
+	examples       string
 	aliases        []string
 	runfunc        RunFunc
 	signalReceiver SignalReceiver
@@ -39,7 +40,6 @@ type App struct {
 	silence        bool
 	disableVersion bool
 	disableConfig  bool
-	disableCmdSort bool
 	subs           []*cobra.Command
 	cmd            *cobra.Command
 }
@@ -101,6 +101,7 @@ func (a *App) buildCommand() *cobra.Command {
 		Short:   a.name,
 		Aliases: a.aliases,
 		Long:    a.description,
+		Example: a.examples,
 		// stop printing usage when the command errors
 		SilenceUsage:  true,
 		SilenceErrors: true,
@@ -140,9 +141,6 @@ func (a *App) buildCommand() *cobra.Command {
 	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
 	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
 
-	if a.disableCmdSort {
-		cobra.EnableCommandSorting = false
-	}
 	return cmd
 }
 
