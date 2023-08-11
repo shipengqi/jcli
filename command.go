@@ -6,6 +6,7 @@ import (
 
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 	"github.com/shipengqi/component-base/term"
+	"github.com/shipengqi/component-base/version/verflag"
 	"github.com/shipengqi/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -18,15 +19,16 @@ type RunCommandFunc func(cmd *Command, args []string) error
 // It is recommended that a command be created with the app.NewCommand()
 // function.
 type Command struct {
-	name     string
-	short    string
-	desc     string
-	examples string
-	aliases  []string
-	opts     CliOptions
-	subs     []*cobra.Command
-	cmd      *cobra.Command
-	runfunc  RunCommandFunc
+	name          string
+	short         string
+	desc          string
+	examples      string
+	enableVersion bool
+	aliases       []string
+	opts          CliOptions
+	subs          []*cobra.Command
+	cmd           *cobra.Command
+	runfunc       RunCommandFunc
 }
 
 // NewCommand creates a new sub command instance based on the given command name
@@ -94,7 +96,6 @@ func (c *Command) MarkHidden(flags ...string) {
 	for _, v := range flags {
 		_ = c.cmd.Flags().MarkHidden(v)
 	}
-	return
 }
 
 // Run runs the command.
@@ -146,12 +147,21 @@ func (c *Command) cobraCommand() *cobra.Command {
 	}
 	addHelpCommandFlag(c.name, cmd.Flags())
 
+	// add version flag when the command is separated from the application.
+	if c.enableVersion {
+		verflag.AddFlags(nfs.FlagSet(FlagSetNameGlobal))
+	}
+
 	width, _, _ := term.TerminalSize(cmd.OutOrStdout())
 	cliflag.SetUsageAndHelpFunc(cmd, nfs, width)
 	return cmd
 }
 
 func (c *Command) run(_ *cobra.Command, args []string) error {
+	if c.enableVersion {
+		verflag.PrintAndExitIfRequested()
+	}
+
 	if c.opts != nil {
 		if err := c.applyOptions(); err != nil {
 			return err
