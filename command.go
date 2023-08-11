@@ -118,6 +118,10 @@ func (c *Command) cobraCommand() *cobra.Command {
 		Short:   c.short,
 		Aliases: c.aliases,
 		Example: c.examples,
+		// stop printing usage when the command errors
+		// ensure that silence can take effect when the command is separated from the application.
+		SilenceUsage:  true,
+		SilenceErrors: true,
 	}
 
 	if c.desc == "" {
