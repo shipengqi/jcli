@@ -135,9 +135,9 @@ func (c *Command) cobraCommand() *cobra.Command {
 	if len(c.subs) > 0 {
 		cmd.AddCommand(c.subs...)
 	}
-	if c.runfunc != nil {
-		cmd.RunE = c.run
-	}
+
+	cmd.RunE = c.run
+
 	var nfs cliflag.NamedFlagSets
 	if c.opts != nil {
 		nfs = c.opts.Flags()

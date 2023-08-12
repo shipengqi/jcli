@@ -168,8 +168,8 @@ func WithCommandExamples(examples string) CommandOption {
 	})
 }
 
-// EnableVersion enable the version flag.
-func EnableVersion() CommandOption {
+// EnableCommandVersion enable the version flag of the command.
+func EnableCommandVersion() CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.enableVersion = true
 	})
