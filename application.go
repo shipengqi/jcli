@@ -21,6 +21,7 @@ const (
 
 var (
 	progressMessage = Green("==>")
+	versionLogger   = &infoLogger{}
 )
 
 // RunFunc defines the application's run callback function.
@@ -150,7 +151,7 @@ func (a *App) run(cmd *cobra.Command, args []string) error {
 	}
 
 	PrintWorkingDir()
-	cliflag.PrintFlags(cmd.Flags())
+	cliflag.PrintFlags(cmd.Flags(), versionLogger)
 
 	if !a.disableConfig && a.opts != nil {
 		if err := viper.BindPFlags(cmd.Flags()); err != nil {

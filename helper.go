@@ -26,3 +26,9 @@ func PrintWorkingDir() {
 	wd, _ := os.Getwd()
 	log.Infof("%v WorkingDir: %s", progressMessage, wd)
 }
+
+type infoLogger struct{}
+
+func (l *infoLogger) Printf(template string, args ...interface{}) {
+	log.Infof(template, args...)
+}
