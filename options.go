@@ -74,6 +74,13 @@ func WithExamples(examples string) Option {
 	})
 }
 
+// WithLogger is used to set the (logger) of the application.
+func WithLogger(logger Logger) Option {
+	return optionFunc(func(a *App) {
+		a.logger = logger
+	})
+}
+
 // WithCliOptions to open the application's function to read from the command line
 // or read parameters from the configuration file.
 func WithCliOptions(opts CliOptions) Option {
@@ -131,7 +138,7 @@ type CommandOption interface {
 	apply(a *Command)
 }
 
-// WithCommandCliOptions to open the application's function to read from the
+// WithCommandCliOptions to open the command's function to read from the
 // command line.
 func WithCommandCliOptions(opts CliOptions) CommandOption {
 	return cmdOptionFunc(func(c *Command) {
@@ -139,7 +146,7 @@ func WithCommandCliOptions(opts CliOptions) CommandOption {
 	})
 }
 
-// WithCommandRunFunc is used to set the application's command startup callback
+// WithCommandRunFunc is used to set the command startup callback
 // function option.
 func WithCommandRunFunc(run RunCommandFunc) CommandOption {
 	return cmdOptionFunc(func(c *Command) {
@@ -147,28 +154,29 @@ func WithCommandRunFunc(run RunCommandFunc) CommandOption {
 	})
 }
 
-// WithCommandAliases sets the command aliases.
+// WithCommandAliases sets the Command aliases.
 func WithCommandAliases(aliases ...string) CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.aliases = aliases
 	})
 }
 
-// WithCommandDesc sets the command aliases.
+// WithCommandDesc sets the Command description.
 func WithCommandDesc(desc string) CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.desc = desc
 	})
 }
 
-// WithCommandExamples is used to set the examples of the command.
+// WithCommandExamples is used to set the examples of the Command.
 func WithCommandExamples(examples string) CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.examples = examples
 	})
 }
 
-// EnableCommandVersion enable the version flag of the command.
+// EnableCommandVersion enable the version flag of the Command.
+// Set only when use the Command as a root command, otherwise no version flag is added.
 func EnableCommandVersion() CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.enableVersion = true

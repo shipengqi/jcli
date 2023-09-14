@@ -1,12 +1,12 @@
-package jcli
+package jcli_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/spf13/cobra"
-
 	cliflag "github.com/shipengqi/component-base/cli/flag"
+	"github.com/shipengqi/jcli"
+	"github.com/spf13/cobra"
 )
 
 type fakeCliOptions struct {
@@ -28,65 +28,65 @@ func (o *fakeCliOptions) Validate() []error {
 
 func TestAppRun(t *testing.T) {
 	t.Run("simple", func(t *testing.T) {
-		app := New("simple")
+		app := jcli.New("simple")
 		app.Run()
 	})
 
 	t.Run("with cli options", func(t *testing.T) {
-		app := New("simple", WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}))
+		app := jcli.New("simple", jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}))
 		app.Run()
 	})
 
 	t.Run("with basename", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"))
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"))
 		app.Run()
 	})
 
 	t.Run("with run", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"),
-			WithDesc("test application description"),
-			WithRunFunc(func() error {
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.WithDesc("test application description"),
+			jcli.WithRunFunc(func() error {
 				fmt.Println("application running")
 				return nil
 			}),
-			DisableConfig())
+			jcli.DisableConfig())
 		app.Run()
 	})
 
 	t.Run("with silence", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"),
-			WithDesc("test application description"),
-			WithRunFunc(func() error {
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.WithDesc("test application description"),
+			jcli.WithRunFunc(func() error {
 				fmt.Println("application running")
 				return nil
 			}),
-			DisableConfig(),
-			WithSilence())
+			jcli.DisableConfig(),
+			jcli.WithSilence())
 		app.Run()
 	})
 
 	t.Run("disable version and config flags", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"),
-			WithDesc("test application description"),
-			DisableConfig(),
-			DisableVersion())
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.WithDesc("test application description"),
+			jcli.DisableConfig(),
+			jcli.DisableVersion())
 		app.Run()
 	})
 
 	t.Run("with run with config", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"),
-			WithDesc("test application description"),
-			WithRunFunc(func() error {
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.WithDesc("test application description"),
+			jcli.WithRunFunc(func() error {
 				fmt.Println("application running")
 				return nil
 			}))
@@ -94,22 +94,22 @@ func TestAppRun(t *testing.T) {
 	})
 
 	t.Run("add commands", func(t *testing.T) {
-		app := New("simple",
-			WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
-			WithBaseName("testApp"),
-			WithDesc("test application description"),
-			DisableConfig(),
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.WithDesc("test application description"),
+			jcli.DisableConfig(),
 		)
 
 		app.AddCommands(
-			NewCommand("sub1", "sub1 command description",
-				WithCommandRunFunc(func(cmd *Command, args []string) error {
+			jcli.NewCommand("sub1", "sub1 command description",
+				jcli.WithCommandRunFunc(func(cmd *jcli.Command, args []string) error {
 					fmt.Println("sub1 command running")
 					return nil
 				}),
-				WithCommandDesc("sub1 long desc"),
+				jcli.WithCommandDesc("sub1 long desc"),
 			),
-			NewCommand("sub2", "sub2 command description", WithCommandRunFunc(func(cmd *Command, args []string) error {
+			jcli.NewCommand("sub2", "sub2 command description", jcli.WithCommandRunFunc(func(cmd *jcli.Command, args []string) error {
 				fmt.Println("sub2 command running")
 				return nil
 			})),

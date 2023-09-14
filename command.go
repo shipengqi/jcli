@@ -47,6 +47,7 @@ func NewCommand(name string, short string, opts ...CommandOption) *Command {
 // AddCommands adds multiple sub commands to the current command.
 func (c *Command) AddCommands(commands ...*Command) {
 	for _, v := range commands {
+		// Todo force to disable global version flag for the sub commands
 		c.subs = append(c.subs, v.cobraCommand())
 		c.cmd.AddCommand(v.cobraCommand())
 	}
