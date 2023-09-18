@@ -1,9 +1,11 @@
 package jcli_test
 
 import (
-	"github.com/shipengqi/jcli"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"github.com/shipengqi/jcli"
 )
 
 func TestRed(t *testing.T) {
