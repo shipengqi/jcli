@@ -3,6 +3,7 @@ package jcli
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	cliflag "github.com/shipengqi/component-base/cli/flag"
 	"github.com/shipengqi/component-base/cli/globalflag"
@@ -84,7 +85,7 @@ func (a *App) Command() *cobra.Command {
 // AddCommands adds multiple sub commands to the App.
 func (a *App) AddCommands(commands ...*Command) {
 	for _, v := range commands {
-		// Todo force to disable global version flag for the sub commands
+		// Todo force to remove global version flag for the sub commands
 		a.subs = append(a.subs, v.cobraCommand())
 		a.cmd.AddCommand(v.cobraCommand())
 	}
@@ -120,7 +121,8 @@ func (a *App) buildCommand() *cobra.Command {
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}
-
+	cmd.SetOut(os.Stdout)
+	cmd.SetErr(os.Stderr)
 	cmd.Flags().SortFlags = true
 	cliflag.InitFlags(cmd.Flags())
 
@@ -180,6 +182,7 @@ func (a *App) run(cmd *cobra.Command, args []string) error {
 
 	if !a.silence {
 		a.logger.Infof("%s Starting %s ...", progressMessage, a.name)
+		a.logger.Infof("%s Executed %s ...", progressMessage, strings.Join(args, " "))
 		if !a.disableVersion {
 			a.logger.Infof("%s Version: \n%s", progressMessage, version.Get().String())
 		}

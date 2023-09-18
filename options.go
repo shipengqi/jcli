@@ -176,7 +176,7 @@ func WithCommandExamples(examples string) CommandOption {
 }
 
 // EnableCommandVersion enable the version flag of the Command.
-// Set only when use the Command as a root command, otherwise no version flag is added.
+// Set only when use the Command as a root command.
 func EnableCommandVersion() CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.enableVersion = true
