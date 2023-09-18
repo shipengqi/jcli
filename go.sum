@@ -172,8 +172,8 @@ github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZV
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/shipengqi/component-base v0.2.0 h1:3AviqFtL04R2dblGnaR7+OCFfaGT3DnkmtwdWiEM4nI=
 github.com/shipengqi/component-base v0.2.0/go.mod h1:hdmMxcIBW7s0ZVkyJDsGnbTP8z73AhFGGQWsEKucOHU=
-github.com/shipengqi/errors v0.1.7 h1:ElwxMU9rKz+W7qH15GLViNShS9BWvJ+ex7qTtelrZaE=
-github.com/shipengqi/errors v0.1.7/go.mod h1:a6zXvYnjsMW871taiFJ5gfUjQeEfC+J4dHvy/G81dQc=
+github.com/shipengqi/errors v0.2.0 h1:TjfwC39s7vTNLt4Nhtor1E/XhDJuN7PdIxW5rNUEWkY=
+github.com/shipengqi/errors v0.2.0/go.mod h1:a6zXvYnjsMW871taiFJ5gfUjQeEfC+J4dHvy/G81dQc=
 github.com/shipengqi/golib v0.2.2 h1:8VCmmofcqUhmCtHfFYXuw9YaAfJx24fE90yNu7oOG8Q=
 github.com/shipengqi/golib v0.2.2/go.mod h1:aAcDn9ExpuYrkEfbGcAwN/p7FZokqRifovFV9Im68hs=
 github.com/shipengqi/log v0.2.0 h1:tjYSDwTxMU1KYZncIxnwwkRl8VzPNjZYO7pPKYunUZw=

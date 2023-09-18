@@ -12,16 +12,16 @@ func TestRed(t *testing.T) {
 }
 
 func TestYellow(t *testing.T) {
-	str := jcli.Yellow("red string")
-	assert.Equal(t, str, "red string")
+	str := jcli.Yellow("yellow string")
+	assert.Equal(t, str, "yellow string")
 }
 
 func TestGreen(t *testing.T) {
-	str := jcli.Green("red string")
-	assert.Equal(t, str, "red string")
+	str := jcli.Green("green string")
+	assert.Equal(t, str, "green string")
 }
 
 func TestBlue(t *testing.T) {
-	str := jcli.Blue("red string")
-	assert.Equal(t, str, "red string")
+	str := jcli.Blue("blue string")
+	assert.Equal(t, str, "blue string")
 }
