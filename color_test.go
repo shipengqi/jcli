@@ -13,6 +13,7 @@ func TestRed(t *testing.T) {
 
 func TestYellow(t *testing.T) {
 	str := jcli.Yellow("yellow string")
+	t.Log(str)
 	assert.Equal(t, str, "yellow string")
 }
 
