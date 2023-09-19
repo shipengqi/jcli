@@ -4,8 +4,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	"github.com/shipengqi/log"
 )
 
 type SignalReceiver func(os.Signal)
@@ -18,7 +16,7 @@ var defaultShutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
 
 // setupSignalHandler SIGTERM and SIGINT are registered by default.
 // Register other signals via the signal parameter.
-func setupSignalHandler(receiver SignalReceiver, signals ...os.Signal) {
+func (a *App) setupSignalHandler(receiver SignalReceiver, signals ...os.Signal) {
 	close(setonce) // channel cannot be closed repeatedly, so panic occurs when called twice.
 
 	if len(signals) == 0 {
@@ -31,10 +29,10 @@ func setupSignalHandler(receiver SignalReceiver, signals ...os.Signal) {
 	go func() {
 		for {
 			if sig, ok := <-sigc; ok {
-				log.Debugf("%s received signal: %s", progressMessage, sig.String())
+				a.logger.Debugf("%s received signal: %s", progressMessage, sig.String())
 				receiver(sig)
 			} else {
-				log.Debugf("%s signal channel closed", progressMessage)
+				a.logger.Debugf("%s signal channel closed", progressMessage)
 				break
 			}
 		}

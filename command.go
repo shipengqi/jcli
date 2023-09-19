@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/pflag"
 )
 
-// RunCommandFunc defines the application's command startup callback function.
+// RunCommandFunc defines the command startup callback function.
 type RunCommandFunc func(cmd *Command, args []string) error
 
 // Command is a sub command structure of a cli application.
@@ -47,6 +47,7 @@ func NewCommand(name string, short string, opts ...CommandOption) *Command {
 // AddCommands adds multiple sub commands to the current command.
 func (c *Command) AddCommands(commands ...*Command) {
 	for _, v := range commands {
+		// Todo force to remove global version flag for the sub commands
 		c.subs = append(c.subs, v.cobraCommand())
 		c.cmd.AddCommand(v.cobraCommand())
 	}
@@ -124,7 +125,8 @@ func (c *Command) cobraCommand() *cobra.Command {
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}
-
+	cmd.SetOut(os.Stdout)
+	cmd.SetErr(os.Stderr)
 	if c.desc == "" {
 		cmd.Long = c.short
 	} else {

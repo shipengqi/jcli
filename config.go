@@ -1,11 +1,12 @@
 package jcli
 
 import (
+	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/shipengqi/golib/sysutil"
-	"github.com/shipengqi/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -22,7 +23,7 @@ func init() {
 
 // addConfigFlag adds flags for a specific server to the specified FlagSet
 // object.
-func addConfigFlag(basename string, fs *pflag.FlagSet) {
+func (a *App) addConfigFlag(basename string, fs *pflag.FlagSet) {
 	fs.AddFlag(pflag.Lookup(ConfigFlagName))
 
 	viper.AutomaticEnv()
@@ -44,11 +45,17 @@ func addConfigFlag(basename string, fs *pflag.FlagSet) {
 		}
 
 		if err := viper.ReadInConfig(); err != nil {
-			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-				log.Warn(err.Error())
+			var configFileNotFoundError viper.ConfigFileNotFoundError
+			if errors.As(err, &configFileNotFoundError) {
+				a.logger.Warn(err.Error())
 				return
 			}
-			log.Fatalf("Error: failed to read configuration file(%s): %v\n", _filename, err)
+			a.logger.Fatalf("Error: failed to read configuration file(%s): %v\n", _filename, err)
 		}
 	})
+}
+
+func (a *App) PrintWorkingDir() {
+	wd, _ := os.Getwd()
+	a.logger.Infof("%v WorkingDir: %s", progressMessage, wd)
 }
