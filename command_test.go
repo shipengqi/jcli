@@ -68,6 +68,7 @@ func TestCommandRun(t *testing.T) {
 	})
 
 	t.Run("with run", func(t *testing.T) {
+		os.Args = []string{"simplecmd"}
 		r, w, _ := os.Pipe()
 		tmp := os.Stdout
 		defer func() {

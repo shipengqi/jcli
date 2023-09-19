@@ -166,6 +166,7 @@ func TestAppRun(t *testing.T) {
 		assert.NotContains(t, string(stdout), "-c, --config FILE")
 	})
 	t.Run("with run", func(t *testing.T) {
+		os.Args = []string{"testApp"}
 		r, w, _ := os.Pipe()
 		tmp := os.Stdout
 		defer func() {
@@ -192,6 +193,7 @@ func TestAppRun(t *testing.T) {
 		assert.NotContains(t, string(stdout), "-c, --config FILE")
 	})
 	t.Run("without run", func(t *testing.T) {
+		os.Args = []string{"testApp"}
 		r, w, _ := os.Pipe()
 		tmp := os.Stdout
 		defer func() {

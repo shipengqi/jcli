@@ -14,6 +14,7 @@ import (
 
 func TestAppOptions(t *testing.T) {
 	t.Run("with basename option", func(t *testing.T) {
+		os.Args = []string{"testapp"}
 		var buf bytes.Buffer
 		log := newTestLogger(&buf)
 		app := jcli.New("testapp",
@@ -27,6 +28,7 @@ func TestAppOptions(t *testing.T) {
 	})
 
 	t.Run("with silence", func(t *testing.T) {
+		os.Args = []string{"testapp"}
 		var buf bytes.Buffer
 		log := newTestLogger(&buf)
 		app := jcli.New("testapp",
@@ -41,6 +43,7 @@ func TestAppOptions(t *testing.T) {
 	})
 
 	t.Run("disable config", func(t *testing.T) {
+		os.Args = []string{"testapp"}
 		var buf bytes.Buffer
 		log := newTestLogger(&buf)
 		app := jcli.New("testapp",
@@ -55,6 +58,7 @@ func TestAppOptions(t *testing.T) {
 
 func TestCommandOptions(t *testing.T) {
 	t.Run("with desc and example", func(t *testing.T) {
+		os.Args = []string{"testcmd"}
 		r, w, _ := os.Pipe()
 		tmp := os.Stdout
 		defer func() {
@@ -94,6 +98,7 @@ func TestCommandOptions(t *testing.T) {
 	})
 
 	t.Run("with alias", func(t *testing.T) {
+		os.Args = []string{"testcmd"}
 		r, w, _ := os.Pipe()
 		tmp := os.Stdout
 		defer func() {
