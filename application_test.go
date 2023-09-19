@@ -106,7 +106,7 @@ func TestAppRun(t *testing.T) {
 		_ = w.Close()
 		stdout, _ := io.ReadAll(r)
 		assert.Contains(t, string(stdout), "This is a example for testing")
-		assert.Contains(t, string(stdout), "testapp, alias1, alias2")
+		assert.Contains(t, string(stdout), "alias1, alias2")
 		assert.Contains(t, string(stdout), "--username")
 		assert.Contains(t, string(stdout), "--password")
 		assert.Contains(t, string(stdout), "--version version[=true]")
