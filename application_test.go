@@ -112,6 +112,30 @@ func TestAppRun(t *testing.T) {
 		assert.Contains(t, string(stdout), "--version version[=true]")
 		assert.Contains(t, string(stdout), "-c, --config FILE")
 	})
+	t.Run("help message should contain description", func(t *testing.T) {
+		os.Args = []string{"testApp", "--help"}
+		r, w, _ := os.Pipe()
+		tmp := os.Stdout
+		defer func() {
+			os.Stdout = tmp
+		}()
+		os.Stdout = w
+
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.WithExamples("This is a example for testing"),
+			jcli.WithDesc("This is a description for testing"))
+		app.Run()
+		_ = w.Close()
+		stdout, _ := io.ReadAll(r)
+		assert.Contains(t, string(stdout), "This is a example for testing")
+		assert.Contains(t, string(stdout), "This is a description for testing")
+		assert.Contains(t, string(stdout), "--username")
+		assert.Contains(t, string(stdout), "--password")
+		assert.Contains(t, string(stdout), "--version version[=true]")
+		assert.Contains(t, string(stdout), "-c, --config FILE")
+	})
 	t.Run("help message should not contain version flag", func(t *testing.T) {
 		os.Args = []string{"testApp", "--help"}
 		r, w, _ := os.Pipe()

@@ -8,27 +8,23 @@ import (
 
 type SignalReceiver func(os.Signal)
 
-var setonce = make(chan struct{})
-
-var sigc chan os.Signal
-
 var defaultShutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
 
 // setupSignalHandler SIGTERM and SIGINT are registered by default.
 // Register other signals via the signal parameter.
 func (a *App) setupSignalHandler(receiver SignalReceiver, signals ...os.Signal) {
-	close(setonce) // channel cannot be closed repeatedly, so panic occurs when called twice.
+	close(a.setonce) // channel cannot be closed repeatedly, so panic occurs when called twice.
 
 	if len(signals) == 0 {
 		signals = defaultShutdownSignals
 	}
-	sigc = make(chan os.Signal)
+	a.sigc = make(chan os.Signal)
 
-	signal.Notify(sigc, signals...)
+	signal.Notify(a.sigc, signals...)
 
 	go func() {
 		for {
-			if sig, ok := <-sigc; ok {
+			if sig, ok := <-a.sigc; ok {
 				a.logger.Debugf("%s received signal: %s", progressMessage, sig.String())
 				receiver(sig)
 			} else {
