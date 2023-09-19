@@ -24,7 +24,6 @@ func TestAppOptions(t *testing.T) {
 		assert.Contains(t, buf.String(), "testappbasename")
 		assert.Contains(t, buf.String(), "WorkingDir:")
 		assert.Contains(t, buf.String(), "Starting testapp")
-
 	})
 
 	t.Run("with silence", func(t *testing.T) {
@@ -36,9 +35,21 @@ func TestAppOptions(t *testing.T) {
 			jcli.WithLogger(log),
 		)
 		app.Run()
-		assert.Contains(t, buf.String(), "testappbasename")
+		assert.Contains(t, buf.String(), "Config File \"testappbasename\" Not Found")
 		assert.NotContains(t, buf.String(), "WorkingDir:")
 		assert.NotContains(t, buf.String(), "Starting testapp")
+	})
+
+	t.Run("disable config", func(t *testing.T) {
+		var buf bytes.Buffer
+		log := newTestLogger(&buf)
+		app := jcli.New("testapp",
+			jcli.WithBaseName("testappbasename"),
+			jcli.DisableConfig(),
+			jcli.WithLogger(log),
+		)
+		app.Run()
+		assert.NotContains(t, buf.String(), "Config File \"testappbasename\" Not Found")
 	})
 }
 
