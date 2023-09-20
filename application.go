@@ -37,6 +37,8 @@ type App struct {
 	runfunc        RunFunc
 	signalReceiver SignalReceiver
 	signals        []os.Signal
+	setonce        chan struct{}
+	sigc           chan os.Signal
 	opts           CliOptions
 	logger         Logger
 	versionLogger  *infoLogger
@@ -50,7 +52,8 @@ type App struct {
 // New create a new cli application.
 func New(name string, opts ...Option) *App {
 	a := &App{
-		name: name,
+		name:    name,
+		setonce: make(chan struct{}),
 	}
 	a.withOptions(opts...)
 
