@@ -6,7 +6,7 @@ require (
 	github.com/fatih/color v1.15.0
 	github.com/shipengqi/component-base v0.2.0
 	github.com/shipengqi/errors v0.2.0
-	github.com/shipengqi/golib v0.2.2
+	github.com/shipengqi/golib v0.2.3
 	github.com/shipengqi/log v0.2.0
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
