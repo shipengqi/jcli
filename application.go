@@ -133,6 +133,8 @@ func (a *App) buildCommand() *cobra.Command {
 		cmd.AddCommand(a.subs...)
 	}
 	cmd.SetHelpCommand(helpCommand(NormalizeCliName(a.basename)))
+	// Todo make it configurable EnableCompletion(hidden bool), add it for Command as well?? , add tests
+	cmd.CompletionOptions.DisableDefaultCmd = true
 	// always add App.run func
 	cmd.RunE = a.run
 
