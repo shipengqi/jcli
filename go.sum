@@ -174,8 +174,8 @@ github.com/shipengqi/component-base v0.2.0 h1:3AviqFtL04R2dblGnaR7+OCFfaGT3Dnkmt
 github.com/shipengqi/component-base v0.2.0/go.mod h1:hdmMxcIBW7s0ZVkyJDsGnbTP8z73AhFGGQWsEKucOHU=
 github.com/shipengqi/errors v0.2.0 h1:TjfwC39s7vTNLt4Nhtor1E/XhDJuN7PdIxW5rNUEWkY=
 github.com/shipengqi/errors v0.2.0/go.mod h1:a6zXvYnjsMW871taiFJ5gfUjQeEfC+J4dHvy/G81dQc=
-github.com/shipengqi/golib v0.2.2 h1:8VCmmofcqUhmCtHfFYXuw9YaAfJx24fE90yNu7oOG8Q=
-github.com/shipengqi/golib v0.2.2/go.mod h1:aAcDn9ExpuYrkEfbGcAwN/p7FZokqRifovFV9Im68hs=
+github.com/shipengqi/golib v0.2.3 h1:Bq7AK6GpoBQtrOTq00inVIsFPxkCP7uhc9T4r+ky3KU=
+github.com/shipengqi/golib v0.2.3/go.mod h1:aAcDn9ExpuYrkEfbGcAwN/p7FZokqRifovFV9Im68hs=
 github.com/shipengqi/log v0.2.0 h1:tjYSDwTxMU1KYZncIxnwwkRl8VzPNjZYO7pPKYunUZw=
 github.com/shipengqi/log v0.2.0/go.mod h1:e3OTHkAprIgnA2+Kx/GgUa6gU3frscgW+aoTWNUbEjQ=
 github.com/spf13/afero v1.9.5 h1:stMpOSZFs//0Lv29HduCmli3GUfpFoF3Y1Q/aXj/wVM=
