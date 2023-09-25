@@ -19,16 +19,18 @@ type RunCommandFunc func(cmd *Command, args []string) error
 // It is recommended that a command be created with the app.NewCommand()
 // function.
 type Command struct {
-	name          string
-	short         string
-	desc          string
-	examples      string
-	enableVersion bool
-	aliases       []string
-	opts          CliOptions
-	subs          []*cobra.Command
-	cmd           *cobra.Command
-	runfunc       RunCommandFunc
+	name             string
+	short            string
+	desc             string
+	examples         string
+	enableVersion    bool
+	enableCompletion bool
+	hideCompletion   bool
+	aliases          []string
+	opts             CliOptions
+	subs             []*cobra.Command
+	cmd              *cobra.Command
+	runfunc          RunCommandFunc
 }
 
 // NewCommand creates a new sub command instance based on the given command name
@@ -147,6 +149,13 @@ func (c *Command) cobraCommand() *cobra.Command {
 			cmd.Flags().AddFlagSet(f)
 		}
 	}
+
+	if !c.enableCompletion {
+		cmd.CompletionOptions.DisableDefaultCmd = true
+	} else if c.hideCompletion {
+		cmd.CompletionOptions.HiddenDefaultCmd = true
+	}
+
 	addHelpCommandFlag(c.name, cmd.Flags())
 
 	// add version flag when the command is separated from the application.

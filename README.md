@@ -101,6 +101,10 @@ Use `WithSilence` to set the application to silent mode.
 Use `WithOnSignalReceived` to set a signals' receiver. `SIGTERM` and `SIGINT` are registered by default.
 Register other signals via the signal parameter.
 
+### EnableCompletion
+
+Use `EnableCompletion` to create a default 'completion' command.
+
 ### Create a new root command
 
 ```go
