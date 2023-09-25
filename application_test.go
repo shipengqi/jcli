@@ -56,6 +56,7 @@ func TestAppRun(t *testing.T) {
 		assert.NotContains(t, buf.String(), "[info] application running")
 		assert.Contains(t, string(stdout), "--username")
 		assert.Contains(t, string(stdout), "--password")
+		assert.Contains(t, string(stdout), "-c, --config FILE")
 		assert.Contains(t, string(stdout), "--version version[=true]")
 		assert.Contains(t, string(stdout), "-c, --config FILE")
 	})
@@ -251,6 +252,7 @@ func TestAppRun(t *testing.T) {
 		app := jcli.New("simple",
 			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
 			jcli.WithBaseName("testApp"),
+			jcli.EnableCompletion(false),
 		)
 		app.AddCommands(
 			jcli.NewCommand("sub1", "sub1 command description",
@@ -279,6 +281,7 @@ func TestAppRun(t *testing.T) {
 		app.Run()
 		_ = w.Close()
 		stdout, _ := io.ReadAll(r)
+		assert.Contains(t, string(stdout), "Generate the autocompletion script for the specified shell")
 		assert.Contains(t, string(stdout), "sub1 command description")
 		assert.Contains(t, string(stdout), "sub2 command description")
 		assert.Contains(t, string(stdout), "sub3 command description")
@@ -288,7 +291,61 @@ func TestAppRun(t *testing.T) {
 		assert.Contains(t, string(stdout), "--version version[=true]")
 		assert.Contains(t, string(stdout), "-c, --config FILE")
 	})
-
+	t.Run("help message should not contain completion command", func(t *testing.T) {
+		os.Args = []string{"testApp", "--help"}
+		r, w, _ := os.Pipe()
+		tmp := os.Stdout
+		defer func() {
+			os.Stdout = tmp
+		}()
+		os.Stdout = w
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+			jcli.EnableCompletion(true),
+		)
+		app.AddCommands(
+			jcli.NewCommand("sub1", "sub1 command description",
+				jcli.WithCommandRunFunc(func(cmd *jcli.Command, args []string) error {
+					fmt.Println("sub1 command running")
+					return nil
+				}),
+				jcli.WithCommandDesc("sub1 long desc"),
+			),
+		)
+		app.Run()
+		_ = w.Close()
+		stdout, _ := io.ReadAll(r)
+		assert.NotContains(t, string(stdout), "Generate the autocompletion script for the specified shell")
+		assert.Contains(t, string(stdout), "sub1 command description")
+	})
+	t.Run("help message should not contain completion command without EnableCompletion", func(t *testing.T) {
+		os.Args = []string{"testApp", "--help"}
+		r, w, _ := os.Pipe()
+		tmp := os.Stdout
+		defer func() {
+			os.Stdout = tmp
+		}()
+		os.Stdout = w
+		app := jcli.New("simple",
+			jcli.WithCliOptions(&fakeCliOptions{"Pooky", "PASS"}),
+			jcli.WithBaseName("testApp"),
+		)
+		app.AddCommands(
+			jcli.NewCommand("sub1", "sub1 command description",
+				jcli.WithCommandRunFunc(func(cmd *jcli.Command, args []string) error {
+					fmt.Println("sub1 command running")
+					return nil
+				}),
+				jcli.WithCommandDesc("sub1 long desc"),
+			),
+		)
+		app.Run()
+		_ = w.Close()
+		stdout, _ := io.ReadAll(r)
+		assert.NotContains(t, string(stdout), "Generate the autocompletion script for the specified shell")
+		assert.Contains(t, string(stdout), "sub1 command description")
+	})
 	t.Run("help message should contain sub-sub commands", func(t *testing.T) {
 		os.Args = []string{"testApp", "sub1", "--help"}
 		r, w, _ := os.Pipe()

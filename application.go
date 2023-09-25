@@ -29,24 +29,26 @@ type RunFunc func() error
 
 // App is the main structure of a cli application.
 type App struct {
-	name           string
-	basename       string
-	description    string
-	examples       string
-	aliases        []string
-	runfunc        RunFunc
-	signalReceiver SignalReceiver
-	signals        []os.Signal
-	setonce        chan struct{}
-	sigc           chan os.Signal
-	opts           CliOptions
-	logger         Logger
-	versionLogger  *infoLogger
-	silence        bool
-	disableVersion bool
-	disableConfig  bool
-	subs           []*cobra.Command
-	cmd            *cobra.Command
+	name             string
+	basename         string
+	description      string
+	examples         string
+	aliases          []string
+	runfunc          RunFunc
+	signalReceiver   SignalReceiver
+	signals          []os.Signal
+	setonce          chan struct{}
+	sigc             chan os.Signal
+	opts             CliOptions
+	logger           Logger
+	versionLogger    *infoLogger
+	silence          bool
+	disableVersion   bool
+	disableConfig    bool
+	enableCompletion bool
+	hideCompletion   bool
+	subs             []*cobra.Command
+	cmd              *cobra.Command
 }
 
 // New create a new cli application.
@@ -132,9 +134,15 @@ func (a *App) buildCommand() *cobra.Command {
 	if len(a.subs) > 0 {
 		cmd.AddCommand(a.subs...)
 	}
+
+	if !a.enableCompletion {
+		cmd.CompletionOptions.DisableDefaultCmd = true
+	} else if a.hideCompletion {
+		cmd.CompletionOptions.HiddenDefaultCmd = true
+	}
+
 	cmd.SetHelpCommand(helpCommand(NormalizeCliName(a.basename)))
-	// Todo make it configurable EnableCompletion(hidden bool), add it for Command as well?? , add tests
-	cmd.CompletionOptions.DisableDefaultCmd = true
+
 	// always add App.run func
 	cmd.RunE = a.run
 

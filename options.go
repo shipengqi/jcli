@@ -129,6 +129,14 @@ func DisableConfig() Option {
 	})
 }
 
+// EnableCompletion creating a default 'completion' command
+func EnableCompletion(hidden bool) Option {
+	return optionFunc(func(a *App) {
+		a.enableCompletion = true
+		a.hideCompletion = hidden
+	})
+}
+
 // ====================================
 // Command Options
 
@@ -180,5 +188,14 @@ func WithCommandExamples(examples string) CommandOption {
 func EnableCommandVersion() CommandOption {
 	return cmdOptionFunc(func(c *Command) {
 		c.enableVersion = true
+	})
+}
+
+// EnableCommandCompletion creating a default 'completion' command of the Command.
+// Set only when use the Command as a root command.
+func EnableCommandCompletion(hidden bool) CommandOption {
+	return cmdOptionFunc(func(c *Command) {
+		c.enableCompletion = true
+		c.hideCompletion = hidden
 	})
 }
