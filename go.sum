@@ -180,8 +180,8 @@ github.com/shipengqi/component-base v0.2.0 h1:3AviqFtL04R2dblGnaR7+OCFfaGT3Dnkmt
 github.com/shipengqi/component-base v0.2.0/go.mod h1:hdmMxcIBW7s0ZVkyJDsGnbTP8z73AhFGGQWsEKucOHU=
 github.com/shipengqi/errors v0.2.0 h1:TjfwC39s7vTNLt4Nhtor1E/XhDJuN7PdIxW5rNUEWkY=
 github.com/shipengqi/errors v0.2.0/go.mod h1:a6zXvYnjsMW871taiFJ5gfUjQeEfC+J4dHvy/G81dQc=
-github.com/shipengqi/golib v0.2.3 h1:Bq7AK6GpoBQtrOTq00inVIsFPxkCP7uhc9T4r+ky3KU=
-github.com/shipengqi/golib v0.2.3/go.mod h1:aAcDn9ExpuYrkEfbGcAwN/p7FZokqRifovFV9Im68hs=
+github.com/shipengqi/golib v0.2.4 h1:XmM4B63uH9MoIK7bPqJ2BEn5cfcvX5xbW3yDXRW4feA=
+github.com/shipengqi/golib v0.2.4/go.mod h1:2YfmzB5Kx5udVjR+J/1eYMXW3wsjQtzcPqNDgAvViBE=
 github.com/shipengqi/log v0.2.0 h1:tjYSDwTxMU1KYZncIxnwwkRl8VzPNjZYO7pPKYunUZw=
 github.com/shipengqi/log v0.2.0/go.mod h1:e3OTHkAprIgnA2+Kx/GgUa6gU3frscgW+aoTWNUbEjQ=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
@@ -362,8 +362,8 @@ golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20210616094352-59db8d763f22/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220908164124-27713097b956/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
-golang.org/x/sys v0.12.0 h1:CM0HF96J0hcLAwsHPJZjfdNzs0gftsLfgKt57wWHJ0o=
-golang.org/x/sys v0.12.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.13.0 h1:Af8nKPmuFypiUBjVoU9V20FiaFXOcuZI21p0ycVYYGE=
+golang.org/x/sys v0.13.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
