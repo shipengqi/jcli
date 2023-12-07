@@ -4,11 +4,11 @@ go 1.18
 
 require (
 	github.com/fatih/color v1.16.0
-	github.com/shipengqi/component-base v0.2.0
+	github.com/shipengqi/component-base v0.2.1
 	github.com/shipengqi/errors v0.2.0
 	github.com/shipengqi/golib v0.2.6
 	github.com/shipengqi/log v0.2.0
-	github.com/spf13/cobra v1.7.0
+	github.com/spf13/cobra v1.8.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.17.0
 	github.com/stretchr/testify v1.8.4
