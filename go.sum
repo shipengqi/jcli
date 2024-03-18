@@ -51,8 +51,8 @@ github.com/sagikazarmark/locafero v0.4.0 h1:HApY1R9zGo4DBgr7dqsTH/JJxLTTsOt7u6ke
 github.com/sagikazarmark/locafero v0.4.0/go.mod h1:Pe1W6UlPYUk/+wc/6KFhbORCfqzgYEpgQ3O5fPuL3H4=
 github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6gto+ugjYE=
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
-github.com/shipengqi/component-base v0.2.4 h1:P423eqA3EeVE1VZaBo9bmrcwTnz5oMkzsE02kdTTxSg=
-github.com/shipengqi/component-base v0.2.4/go.mod h1:uNVw/00SYUlhambc9Vz25oAeE4qd5g9ryZTkkUfizQs=
+github.com/shipengqi/component-base v0.2.5 h1:EsTCCVfEVJjUrAwAtCKqStrJV+OEX/qJ417tPYfCSPI=
+github.com/shipengqi/component-base v0.2.5/go.mod h1:rM8ivvN3ps15+ZzC/y8/xao3g7rsMZU9vkkIe4Z5nt4=
 github.com/shipengqi/errors v0.3.0 h1:PrhXl3v0GpelUubjwO07d3C1DZU+IF1Fm2mGaQha4NI=
 github.com/shipengqi/errors v0.3.0/go.mod h1:6s/KEoXw9JRDoS1kC0CTWmibiIEQt3ZCTX3t1EzNEdI=
 github.com/shipengqi/golib v0.2.11 h1:4cAbAzk5diqIn4s/U/K1ZD1z6lY8oTCWWusxIPGk+pw=
