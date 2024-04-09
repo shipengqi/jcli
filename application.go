@@ -41,7 +41,7 @@ type App struct {
 	sigc             chan os.Signal
 	opts             CliOptions
 	logger           Logger
-	versionLogger    *infoLogger
+	flagPrinter      FlagPrinter
 	silence          bool
 	disableVersion   bool
 	disableConfig    bool
@@ -63,7 +63,9 @@ func New(name string, opts ...Option) *App {
 	if a.logger == nil {
 		a.logger = log.WithValues()
 	}
-	a.versionLogger = newInfoLogger(a.logger)
+	if a.flagPrinter == nil {
+		a.flagPrinter = newInfoLogger(a.logger)
+	}
 
 	a.cmd = a.buildCommand()
 
@@ -90,7 +92,7 @@ func (a *App) Command() *cobra.Command {
 // AddCommands adds multiple sub commands to the App.
 func (a *App) AddCommands(commands ...*Command) {
 	for _, v := range commands {
-		// Todo force to remove global version flag for the sub commands
+		// Todo force to remove global version flag for the sub commands??
 		a.subs = append(a.subs, v.cobraCommand())
 		a.cmd.AddCommand(v.cobraCommand())
 	}
@@ -180,8 +182,8 @@ func (a *App) run(cmd *cobra.Command, args []string) error {
 
 	if !a.silence {
 		a.PrintWorkingDir()
+		cliflag.PrintFlags(cmd.Flags(), a.flagPrinter)
 	}
-	cliflag.PrintFlags(cmd.Flags(), a.versionLogger)
 
 	if !a.disableConfig && a.opts != nil {
 		if err := viper.BindPFlags(cmd.Flags()); err != nil {

@@ -12,3 +12,7 @@ type Logger interface {
 	Fatalf(template string, args ...interface{})
 	Fatal(msg string, keysAndValues ...interface{})
 }
+
+type FlagPrinter interface {
+	Printf(template string, args ...interface{})
+}

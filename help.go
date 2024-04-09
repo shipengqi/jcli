@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	flagHelp          = "help"
-	flagHelpShorthand = "H"
+	flagHelp = "help"
 )
 
 func helpCommand(name string) *cobra.Command {
@@ -35,9 +34,8 @@ Simply type ` + name + ` help [path to command] for full details.`,
 }
 
 func addHelpCommandFlag(usage string, fs *pflag.FlagSet) {
-	fs.BoolP(
+	fs.Bool(
 		flagHelp,
-		flagHelpShorthand,
 		false,
 		fmt.Sprintf("Help for the %s command.", color.GreenString(strings.Split(usage, " ")[0])),
 	)

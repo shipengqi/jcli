@@ -81,6 +81,13 @@ func WithLogger(logger Logger) Option {
 	})
 }
 
+// WithFlagPrinter is used print the flags of the application.
+func WithFlagPrinter(printer FlagPrinter) Option {
+	return optionFunc(func(a *App) {
+		a.flagPrinter = printer
+	})
+}
+
 // WithCliOptions to open the application's function to read from the command line
 // or read parameters from the configuration file.
 func WithCliOptions(opts CliOptions) Option {
@@ -90,7 +97,7 @@ func WithCliOptions(opts CliOptions) Option {
 }
 
 // WithSilence sets the application to silent mode, in which the program startup
-// information, configuration information, and version information are not
+// information, flags, configuration information, and version information are not
 // printed in the console.
 func WithSilence() Option {
 	return optionFunc(func(a *App) {
