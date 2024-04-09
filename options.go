@@ -96,10 +96,10 @@ func WithCliOptions(opts CliOptions) Option {
 	})
 }
 
-// WithSilence sets the application to silent mode, in which the program startup
+// EnableSilence sets the application to silent mode, in which the program startup
 // information, flags, configuration information, and version information are not
 // printed in the console.
-func WithSilence() Option {
+func EnableSilence() Option {
 	return optionFunc(func(a *App) {
 		a.silence = true
 	})
