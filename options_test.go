@@ -33,7 +33,7 @@ func TestAppOptions(t *testing.T) {
 		log := newTestLogger(&buf)
 		app := jcli.New("testapp",
 			jcli.WithBaseName("testappbasename"),
-			jcli.WithSilence(),
+			jcli.EnableSilence(),
 			jcli.WithLogger(log),
 		)
 		app.Run()

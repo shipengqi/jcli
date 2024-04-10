@@ -92,9 +92,9 @@ You can use `DisableConfig` to disable it.
 
 By default, `App` will add the `--version` flag, you can use `DisableVersion` to disable it.
 
-### WithSilence 
+### EnableSilence 
 
-Use `WithSilence` to set the application to silent mode.
+Use `EnableSilence` to set the application to silent mode.
 
 ### WithOnSignalReceived 
 
