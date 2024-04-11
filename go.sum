@@ -57,8 +57,8 @@ github.com/shipengqi/errors v0.3.0 h1:PrhXl3v0GpelUubjwO07d3C1DZU+IF1Fm2mGaQha4N
 github.com/shipengqi/errors v0.3.0/go.mod h1:6s/KEoXw9JRDoS1kC0CTWmibiIEQt3ZCTX3t1EzNEdI=
 github.com/shipengqi/golib v0.2.12 h1:/0hrev7+J8KChxEvoVdS2kbGQT8VO4C4qFAhtn6ZI8o=
 github.com/shipengqi/golib v0.2.12/go.mod h1:PIezev9VXxmhjawpu3j1JgLSNKLMq5AB8gLouJ83mrw=
-github.com/shipengqi/log v0.2.1 h1:pawJC3pGOLJ1UHMnsqS7M/ytrygbGJKTc3ZkT+PcbJU=
-github.com/shipengqi/log v0.2.1/go.mod h1:iMlKPiGFkGonNRXaRF2iNJB2ocnRUk3ZgjQOn0MrUps=
+github.com/shipengqi/log v0.2.2 h1:+JvLIb3Xycl3/XJFVZn+ZzbJF7HeUBhdNvOdUoFHHS0=
+github.com/shipengqi/log v0.2.2/go.mod h1:YqXfNjg7aDR/KrXoU5KC3vCQ/YldJltQbyEwnlpJOb4=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
 github.com/sourcegraph/conc v0.3.0/go.mod h1:Sdozi7LEKbFPqYX2/J+iBAM6HpqSLTASQIKqDmF7Mt0=
 github.com/spf13/afero v1.11.0 h1:WJQKhtpdm3v2IzqG8VMqrr6Rf3UYpEF239Jy9wNepM8=
@@ -74,6 +74,7 @@ github.com/spf13/viper v1.18.2/go.mod h1:EKmWIqdnk5lOcmR72yw6hS+8OPYcwD0jteitLMV
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
 github.com/stretchr/objx v0.5.0/go.mod h1:Yh+to48EsGEfYuaHDzXPcE3xhTkx73EhmCGUpEOglKo=
+github.com/stretchr/objx v0.5.2/go.mod h1:FRsXN1f5AsAjCGJKqEizvkpNtU+EGNCLh3NxZ/8L+MA=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=

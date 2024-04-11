@@ -7,7 +7,7 @@ require (
 	github.com/shipengqi/component-base v0.2.7
 	github.com/shipengqi/errors v0.3.0
 	github.com/shipengqi/golib v0.2.12
-	github.com/shipengqi/log v0.2.1
+	github.com/shipengqi/log v0.2.2
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.18.2
