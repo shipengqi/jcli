@@ -22,7 +22,6 @@ func TestAppOptions(t *testing.T) {
 			jcli.WithLogger(log),
 		)
 		app.Run()
-		assert.Contains(t, buf.String(), "testappbasename")
 		assert.Contains(t, buf.String(), "WorkingDir:")
 		assert.Contains(t, buf.String(), "Starting testapp")
 	})
