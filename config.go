@@ -46,8 +46,8 @@ func (a *App) addConfigFlag(basename string, fs *pflag.FlagSet) {
 
 		if err := viper.ReadInConfig(); err != nil {
 			var configFileNotFoundError viper.ConfigFileNotFoundError
-			if errors.As(err, &configFileNotFoundError) {
-				a.logger.Warn(err.Error())
+			// cannot find any configuration files in the /home and /etc directories
+			if _filename == "" && errors.As(err, &configFileNotFoundError) {
 				return
 			}
 			a.logger.Fatalf("Error: failed to read configuration file(%s): %v\n", _filename, err)

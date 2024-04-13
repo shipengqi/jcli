@@ -85,7 +85,8 @@ Use `jcli.WithLogger` to set a custom `Logger`
 
 ### DisableConfig
 
-By default, `App` will add the `--config` flag, and use [Viper](https://github.com/spf13/viper) to parse the config file.
+By default, `App` will add the `--config` flag, and use [Viper](https://github.com/spf13/viper) to parse the config file. The ".{{basename}}" file in the home directory and the "{{basename}}" file in the "/etc" directory will be loaded as a configuration file.
+
 You can use `DisableConfig` to disable it.
 
 ### DisableVersion
