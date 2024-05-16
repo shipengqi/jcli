@@ -3,7 +3,7 @@ module github.com/shipengqi/jcli
 go 1.18
 
 require (
-	github.com/fatih/color v1.16.0
+	github.com/fatih/color v1.17.0
 	github.com/shipengqi/component-base v0.2.9
 	github.com/shipengqi/errors v0.3.0
 	github.com/shipengqi/golib v0.2.13
