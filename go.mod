@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/fatih/color v1.17.0
 	github.com/shipengqi/component-base v0.2.9
-	github.com/shipengqi/errors v0.3.0
+	github.com/shipengqi/errors v0.3.1
 	github.com/shipengqi/golib v0.2.13
 	github.com/shipengqi/log v0.2.2
 	github.com/spf13/cobra v1.8.1
