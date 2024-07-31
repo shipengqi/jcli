@@ -53,8 +53,8 @@ github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6g
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
 github.com/shipengqi/component-base v0.2.11 h1:oNCwa3FhFBGtKVJHSc3Tr+h9ERMX6JAVxkKToeIIh4M=
 github.com/shipengqi/component-base v0.2.11/go.mod h1:YJoIETZyVgILBSqiA7ze+WXgh8j/qz8WN+gpiTfnhc8=
-github.com/shipengqi/errors v0.3.1 h1:NMAYVFkH/fsv8sUvF9EgMUvIqiQy4o7wU+arM2z4SoI=
-github.com/shipengqi/errors v0.3.1/go.mod h1:6s/KEoXw9JRDoS1kC0CTWmibiIEQt3ZCTX3t1EzNEdI=
+github.com/shipengqi/errors v0.3.3 h1:ik9A0EH5BJNgXxna3fcjQjUCgGUed+ZU4weWZtkZYJs=
+github.com/shipengqi/errors v0.3.3/go.mod h1:6s/KEoXw9JRDoS1kC0CTWmibiIEQt3ZCTX3t1EzNEdI=
 github.com/shipengqi/golib v0.2.15 h1:0CUW0ukcwym1lM0hew4DS2AT3H4ipPV96N8yPThMeVc=
 github.com/shipengqi/golib v0.2.15/go.mod h1:CB4NhzRSfmGce5NGtgyfSGX4AlaWX7BSb8FenMnDadY=
 github.com/shipengqi/log v0.2.3 h1:dH1LEgFV1jkojNvVf2qdjcYrWIEQ7LsHPkPaeefsTcA=
