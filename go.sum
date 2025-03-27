@@ -54,8 +54,8 @@ github.com/shipengqi/component-base v0.2.11 h1:oNCwa3FhFBGtKVJHSc3Tr+h9ERMX6JAVx
 github.com/shipengqi/component-base v0.2.11/go.mod h1:YJoIETZyVgILBSqiA7ze+WXgh8j/qz8WN+gpiTfnhc8=
 github.com/shipengqi/errors v0.3.3 h1:ik9A0EH5BJNgXxna3fcjQjUCgGUed+ZU4weWZtkZYJs=
 github.com/shipengqi/errors v0.3.3/go.mod h1:6s/KEoXw9JRDoS1kC0CTWmibiIEQt3ZCTX3t1EzNEdI=
-github.com/shipengqi/golib v0.2.23 h1:wyu4HOI5lsx2spBGYf9zTIF6HSxGVvDd2xVa//Q3unQ=
-github.com/shipengqi/golib v0.2.23/go.mod h1:J9qllr0k73YeNJHJc5HBuxK2BL0WwUq9mNfczhjezeQ=
+github.com/shipengqi/golib v0.2.24 h1:zaRxj76Vhou/mKwi5T9DwwknqjefxeDxNd1soCf7jtQ=
+github.com/shipengqi/golib v0.2.24/go.mod h1:J9qllr0k73YeNJHJc5HBuxK2BL0WwUq9mNfczhjezeQ=
 github.com/shipengqi/log v0.2.3 h1:dH1LEgFV1jkojNvVf2qdjcYrWIEQ7LsHPkPaeefsTcA=
 github.com/shipengqi/log v0.2.3/go.mod h1:YqXfNjg7aDR/KrXoU5KC3vCQ/YldJltQbyEwnlpJOb4=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
