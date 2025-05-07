@@ -6,7 +6,7 @@ require (
 	github.com/fatih/color v1.18.0
 	github.com/shipengqi/component-base v0.2.11
 	github.com/shipengqi/errors v0.3.3
-	github.com/shipengqi/golib v0.2.25
+	github.com/shipengqi/golib v0.2.26
 	github.com/shipengqi/log v0.2.3
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/pflag v1.0.6
@@ -35,7 +35,7 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
